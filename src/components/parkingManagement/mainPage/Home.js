@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import SelectParkinglot from '../components/dropdowns/SelectParkinglot';
 import SelectParkingCollection from '../components/dropdowns/SelectParkingCollection';
 import { Button, Carousel } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const [selectedParkingLotId, setSelectedParkingLotId] = useState(null);
+    const [SelectedParkingCollectionId, setSelectedParkingCollectionId] = useState(null);
+
     const navigate = useNavigate();
     const [isParkingLotAvailable, setIsParkingLotAvailable] = useState(true);
+    
+    const handleParkingCollectionSelect = (parkingCollectionId) => {
+      console.log("Selected parking collection ID in Home:", parkingCollectionId);
+      setSelectedParkingCollectionId(parkingCollectionId);
+    };
 
     const handleShowCars = () => {
         if (!selectedParkingLotId || selectedParkingLotId === '0') {
@@ -16,9 +22,8 @@ const Home = () => {
         }
 
         console.log("Submit button clicked. Selected parking lot ID:", selectedParkingLotId);
-        navigate('/show-cars', { state: { parkingLotId: selectedParkingLotId } });
+        navigate('/show-cars', { state: { parkingLotId: selectedParkingLotId, parkingCollectionId: SelectedParkingCollectionId } });
     };
-
 
     const imageUrl1 = "https://ledlightsdirect.com/cdn/shop/articles/1_88a01236-596e-49f1-a37b-7c548c073a3b.png?v=1697551143";
     const imageUrl2 = "https://www.cooperlighting.com/b-dam/cooper-lighting/product-category/outdoor/garage-canopy-tunnel-landing-page-assets/outdoor-garage-container-6-toptier-2-img.jpg";
@@ -45,7 +50,7 @@ const Home = () => {
                 <h2 className="text-4xl font-semibold mb-2 font-body">Search the Cars</h2>
                 <div className="flex justify-between items-center mb-8 space-x-4 py-8">
                     <div className="flex-1">
-                        <SelectParkingCollection setSelectedParkingLotId={setSelectedParkingLotId} />
+                        <SelectParkingCollection setSelectedParkingLotId={setSelectedParkingLotId} onParkingCollectionSelect={handleParkingCollectionSelect} />
                     </div>
                 </div>
 

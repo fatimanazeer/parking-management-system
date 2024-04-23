@@ -4,9 +4,9 @@ import { Toaster, toast } from "sonner";
 import { AuthProvider } from "./contexts/authContext";
 import { useRoutes } from "react-router-dom";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
-import ShowCars from "./components/parkingManagemet/components/DisplayCars";
-import Home from "./components/parkingManagemet/mainPage/Home";
+import Home from "./components/parkingManagement/mainPage/Home";
 import SignUp from "./components/auth/signUp/SignUp";
+import DisplayCars from './components/parkingManagement/components/DisplayCars';
 
 function App() {
   const routesArray = useRoutes([
@@ -26,7 +26,7 @@ function App() {
       path: '/show-cars',
       element: (
         <ProtectedRoute>
-          <ShowCars />
+          <DisplayCars />
         </ProtectedRoute>
       ),
     },

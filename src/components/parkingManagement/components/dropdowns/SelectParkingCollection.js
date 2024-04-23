@@ -3,33 +3,43 @@ import { Select, ConfigProvider } from "antd";
 import { collection, getDocs, query } from "firebase/firestore";
 import { firestore } from "../../../../firebase/firebase";
 import SelectParkinglot from "./SelectParkinglot";
+import { getDatabase, ref, get } from "firebase/database";
 
-const SelectParkingCollection = ({ setSelectedParkingLotId }) => {
+const SelectParkingCollection = ({ setSelectedParkingLotId, onParkingCollectionSelect }) => {
   const [parkingData, setParkingData] = useState([]);
   const [selectedParkingCollectionId, setSelectedParkingCollectionId] = useState(null);
 
   const handleParkingCollectionChange = (value) => {
     console.log("Selected parking collection ID:", value);
     setSelectedParkingCollectionId(value);
+    onParkingCollectionSelect(value);
   };
 
   useEffect(() => {
-    const fetchParkingData = async () => {
+    const fetchParkingCollections = async () => {
+      const db = getDatabase();
+      const parkingRef = ref(db, 'parking'); 
       try {
-        const q = query(collection(firestore, "parking_collection"));
-        const querySnapshot = await getDocs(q);
-        const data = querySnapshot.docs.map((doc) => ({
-          value: doc.data().parking_collection_id,
-          label: doc.data().parking_collection_name,
-        }));
-        setParkingData(data);
+        const snapshot = await get(parkingRef);
+        if (snapshot.exists()) {
+          const data = [];
+          snapshot.forEach((childSnapshot) => {
+            const key = childSnapshot.key;
+            data.push({ value: key, label: key });
+          });
+          setParkingData(data);
+          console.log(data)
+        } else {
+          console.log("No parking collections available");
+        }
       } catch (error) {
-        console.error("Error fetching parking data:", error);
+        console.error("Error fetching parking collections:", error);
       }
     };
-
-    fetchParkingData();
+  
+    fetchParkingCollections();
   }, []);
+  
 
   return (
     <ConfigProvider

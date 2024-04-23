@@ -1,25 +1,21 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../contexts/authContext'
-import { doSignOut } from '../../firebase/auth'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/authContext';
+import { doSignOut } from '../../firebase/auth';
 import { Button } from 'antd';
-
 const Header = () => {
     const navigate = useNavigate();
     const { userLoggedIn } = useAuth();
-
     const handleLogin = () => {
         navigate('/login');
     };
-
     const handleRegister = () => {
         navigate('/register');
     };
-
     return (
-        <nav className=' flex flex-row justify-between items-center w-full z-20 fixed top-0 left-0 h-16 border-b bg-transparent px-4'>
-            <span className='font-body'>Parking Lot Managemet System</span>
-            <div className="  flex gap-x-2">
+        <nav className='flex flex-row justify-between items-center w-full z-20 sticky top-0 left-0 h-16 border-b bg-white px-4'>
+            <span className='font-body'>Parking Lot Management System</span>
+            <div className="flex gap-x-2">
                 {userLoggedIn ? (
                     <Button
                         onClick={() => doSignOut().then(() => navigate('/login'))}
@@ -53,5 +49,4 @@ const Header = () => {
         </nav>
     );
 };
-
 export default Header;
