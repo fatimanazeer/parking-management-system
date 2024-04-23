@@ -13,7 +13,7 @@ const Header = () => {
         navigate('/register');
     };
     return (
-        <nav className='flex flex-row justify-between items-center w-full z-20 sticky top-0 left-0 h-16 border-b bg-white px-4'>
+        <nav className='flex flex-row justify-between items-center w-full z-20 fixed top-0 left-0 h-16 border-b bg-white px-4'>
             <span className='font-body'>Parking Lot Management System</span>
             <div className="flex gap-x-2">
                 {userLoggedIn ? (
