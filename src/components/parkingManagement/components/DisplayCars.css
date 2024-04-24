@@ -53,3 +53,11 @@
     color: #333;
     margin-top: 10px; /* Add space between image and text */
   }
+  
+  .car-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Other styles */
+  }
+  
